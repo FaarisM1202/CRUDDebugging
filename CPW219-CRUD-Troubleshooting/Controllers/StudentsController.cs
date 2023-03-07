@@ -30,7 +30,7 @@ namespace CPW219_CRUD_Troubleshooting.Controllers
             {
                 StudentDb.Add(p, context);
                 ViewData["Message"] = $"{p.Name} was added!";
-                return View();
+                return RedirectToAction("Index");
             }
 
             //Show web page with errors
@@ -43,7 +43,7 @@ namespace CPW219_CRUD_Troubleshooting.Controllers
             Student p = StudentDb.GetStudent(context, id);
 
             //show it on web page
-            return View();
+            return View(p);
         }
 
         [HttpPost]
@@ -53,7 +53,7 @@ namespace CPW219_CRUD_Troubleshooting.Controllers
             {
                 StudentDb.Update(context, p);
                 ViewData["Message"] = "Product Updated!";
-                return View(p);
+                return RedirectToAction("Index");
             }
             //return view with errors
             return View(p);
