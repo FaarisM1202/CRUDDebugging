@@ -1,0 +1,47 @@
+﻿@model Student
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Student Delete Page</h1>
+<hr />
+
+<div class="row">
+    <form asp-action="Delete">
+        <dt class="col-1">
+                @Html.DisplayNameFor(model => model.StudentId)
+        </dt>
+        <dd class="col-sm-1">
+                @Html.DisplayFor(model => model.StudentId)
+        </dd>
+        <dt class="col-2">
+                @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-2">
+                @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-3">
+                @Html.DisplayNameFor(model => model.DateOfBirth)
+        </dt>
+        <dd class="col-sm-3">
+                @Html.DisplayFor(model => model.DateOfBirth)
+        </dd>
+
+        <form asp-action="Delete">
+            <input type="submit" value="Delete" class="btn btn-danger" />
+            <a asp-action="Index">Back To List</a>
+        </form>
+    </form>
+
+</div>
+
+<div>
+    <a asp-action="Index">Back To Home Page</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
