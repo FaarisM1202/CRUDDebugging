@@ -1,4 +1,5 @@
-﻿namespace CPW219_CRUD_Troubleshooting.Models
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+namespace CPW219_CRUD_Troubleshooting.Models
 {
     public class Student
     {
