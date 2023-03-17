@@ -26,82 +26,61 @@ namespace CPW219_CRUD_Troubleshooting.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Student p)
+        public IActionResult Create(Student p)
         {
             if (ModelState.IsValid)
             {
-                context.Students.Add(p);
-                await context.SaveChangesAsync();
+                StudentDb.Add(p, context);
+                TempData["Message"] = $"{p.Name} was added!";
 
-                ViewData["Message"] = $"{p.Name} was added!";
-                return View();
+
+                return RedirectToAction("Index");
             }
 
             //Show web page with errors
             return View(p);
         }
 
-        public async Task<IActionResult> Edit(int id)
+        public IActionResult Edit(int id)
         {
             //get the product by id
-            Student? p = await context.Students.FindAsync(id);
-            if(p == null)
-            {
-                return NotFound();
-            }
+            Student p = StudentDb.GetStudent(context, id);
             return View(p);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Student p)
+        public IActionResult Edit(Student p)
         {
             if (ModelState.IsValid)
             {
-                context.Students.Update(p);
-                await context.SaveChangesAsync();
+                StudentDb.Update(context, p);
 
-                ViewData["Message"] = "Product Updated!";
+                TempData["Message"] = "Product is Updated!";
                 return RedirectToAction("Index");
             }
             //return view with errors
             return View(p);
         }
 
-        public async Task<IActionResult> Delete(int id)
+        public IActionResult Delete(int id)
         {
-            Student? p =  await context.Students.FindAsync(id);
-            if(p == null)
-            {
-                return NotFound();
-            }
+            Student p = StudentDb.GetStudent(context, id);
             return View(p);
         }
 
         [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirm(int id)
+        public IActionResult DeleteConfirm(int id)
         {
             //Get Product from database
-            Student? p =  await context.Students.FindAsync(id);
+            Student p = StudentDb.GetStudent(context, id);
+            StudentDb.Delete(context, p);
 
-            if(p != null)
-            {
-                context.Students.Remove(p);
-                await context.SaveChangesAsync();
-                TempData["Message"] = $"{p.Name} was deleted!";
-                return RedirectToAction("Index");
-            }
-
-            TempData["Message"] = "Student was already deleted!!!";
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Details(int id)
+        public IActionResult Details(int id)
         {
-            Student? p = await context.Students.FindAsync(id);
-
-            if(p == null) {         
-                return NotFound();
-            }
+            Student p = StudentDb.GetStudent(context, id);
             return View(p);
         }
     }
